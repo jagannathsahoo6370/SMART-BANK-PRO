@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}
+Transactions
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        Transaction History
+    </h2>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-hover table-bordered">
+
+                <thead class="table-primary">
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Amount (₹)</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for transaction in transactions %}
+
+                    <tr>
+
+                        <td>
+                            {{ transaction.timestamp.strftime("%d-%m-%Y %H:%M") }}
+                        </td>
+
+                        <td>
+
+                            {% if transaction.transaction_type == "Deposit" %}
+
+                                <span class="badge bg-success">
+                                    Deposit
+                                </span>
+
+                            {% elif transaction.transaction_type == "Withdraw" %}
+
+                                <span class="badge bg-danger">
+                                    Withdraw
+                                </span>
+
+                            {% elif transaction.transaction_type == "Transfer" %}
+
+                                <span class="badge bg-primary">
+                                    Transfer
+                                </span>
+
+                            {% elif transaction.transaction_type == "Received" %}
+
+                                <span class="badge bg-info">
+                                    Received
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary">
+                                    {{ transaction.transaction_type }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ transaction.description }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(transaction.amount) }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center">
+                            No transactions found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

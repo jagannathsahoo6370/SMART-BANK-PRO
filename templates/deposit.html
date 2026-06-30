@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Deposit Money</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/deposit.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="deposit-container">
+
+<div class="deposit-card">
+
+<h2>💰 Deposit Money</h2>
+
+<p>Add funds securely to your SmartBank Pro account.</p>
+
+<div class="balance-box">
+
+<h5>Current Balance</h5>
+
+<h1>₹ {{ account.balance }}</h1>
+
+</div>
+
+<form method="POST">
+
+{{ form.hidden_tag() }}
+
+<div class="mb-3">
+
+{{ form.amount.label(class="form-label") }}
+
+{{ form.amount(class="form-control",
+placeholder="Enter Deposit Amount") }}
+
+</div>
+
+<div class="mb-3">
+
+{{ form.description.label(class="form-label") }}
+
+{{ form.description(class="form-control",
+placeholder="Deposit Description") }}
+
+</div>
+
+{{ form.submit(class="btn-deposit") }}
+
+</form>
+
+</div>
+
+<div class="info-card">
+
+<h4>💡 Deposit Tips</h4>
+
+<ul>
+
+<li>✔ Double-check the deposit amount.</li>
+
+<li>✔ Deposits are processed instantly.</li>
+
+<li>✔ Download your bank statement anytime.</li>
+
+<li>✔ Your balance updates automatically.</li>
+
+<li>✔ All deposits are securely encrypted.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

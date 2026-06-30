@@ -1,0 +1,327 @@
+/* ======================================
+   SmartBank Pro Dashboard CSS
+   ====================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#eef3f8;
+    color:#333;
+}
+
+/* ===============================
+   Navbar
+   =============================== */
+
+.navbar{
+    background:linear-gradient(90deg,#0d6efd,#0b5ed7);
+    padding:15px 30px;
+}
+
+.navbar-brand{
+    font-size:24px;
+    font-weight:700;
+    color:white !important;
+}
+
+.nav-link{
+    color:white !important;
+    margin-left:15px;
+    transition:.3s;
+}
+
+.nav-link:hover{
+    color:#ffd43b !important;
+}
+
+/* ===============================
+   Cards
+   =============================== */
+
+.card{
+    border:none;
+    border-radius:18px;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+}
+
+.card-body{
+    padding:30px;
+}
+
+.card h5{
+    font-weight:600;
+    color:#555;
+}
+
+.card h3{
+    margin-top:15px;
+    font-size:30px;
+    font-weight:700;
+}
+
+/* Different Card Colors */
+
+.balance-card{
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+    color:white;
+}
+
+.deposit-card{
+    background:linear-gradient(135deg,#43e97b,#38f9d7);
+    color:white;
+}
+
+.withdraw-card{
+    background:linear-gradient(135deg,#fa709a,#fee140);
+    color:white;
+}
+
+.transfer-card{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+}
+
+/* ===============================
+   Buttons
+   =============================== */
+
+.btn{
+    border-radius:12px;
+    font-weight:600;
+    padding:10px 18px;
+}
+
+.btn-primary{
+    background:#0d6efd;
+    border:none;
+}
+
+.btn-success{
+    background:#198754;
+    border:none;
+}
+
+.btn-danger{
+    border:none;
+}
+
+.btn-warning{
+    color:white;
+}
+
+.btn:hover{
+    transform:scale(1.04);
+}
+
+/* ===============================
+   Tables
+   =============================== */
+
+.table{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.table thead{
+    background:#0d6efd;
+    color:white;
+}
+
+.table th{
+    padding:15px;
+}
+
+.table td{
+    padding:15px;
+    vertical-align:middle;
+}
+
+.table tbody tr:hover{
+    background:#f8f9fa;
+}
+
+/* ===============================
+   Transaction Badge
+   =============================== */
+
+.badge{
+    padding:8px 12px;
+    font-size:13px;
+}
+
+.badge-success{
+    background:#198754;
+}
+
+.badge-danger{
+    background:#dc3545;
+}
+
+.badge-warning{
+    background:#ffc107;
+    color:black;
+}
+
+/* ===============================
+   Account Information
+   =============================== */
+
+.account-box{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.account-box h4{
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+.account-box p{
+    margin-bottom:12px;
+    font-size:15px;
+}
+
+/* ===============================
+   Welcome Section
+   =============================== */
+
+.welcome{
+    margin-bottom:30px;
+}
+
+.welcome h2{
+    font-weight:700;
+}
+
+.welcome p{
+    color:#666;
+}
+
+/* ===============================
+   Quick Action Buttons
+   =============================== */
+
+.quick-actions{
+    margin-top:25px;
+}
+
+.quick-actions .btn{
+    margin-right:10px;
+    margin-bottom:10px;
+}
+
+/* ===============================
+   Alerts
+   =============================== */
+
+.alert{
+    border-radius:12px;
+}
+
+/* ===============================
+   Footer
+   =============================== */
+
+footer{
+    margin-top:60px;
+    padding:20px;
+    text-align:center;
+    color:#777;
+}
+
+/* ===============================
+   Responsive
+   =============================== */
+
+@media(max-width:992px){
+
+    .navbar-brand{
+        font-size:20px;
+    }
+
+    .card{
+        margin-bottom:20px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .card h3{
+        font-size:24px;
+    }
+
+    .table{
+        font-size:14px;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .navbar{
+        padding:12px;
+    }
+
+    .welcome h2{
+        font-size:24px;
+    }
+
+    .btn{
+        width:100%;
+        margin-bottom:10px;
+    }
+
+}
+
+body{
+
+background:#f5f7fb;
+
+color:#222;
+
+transition:.4s;
+
+}
+
+body.dark{
+
+background:#1d1d1d;
+
+color:white;
+
+}
+
+body.dark .card{
+
+background:#2d2d2d;
+
+color:white;
+
+}
+
+body.dark .navbar{
+
+background:#111!important;
+
+}
+
+body.dark table{
+
+color:white;
+
+}

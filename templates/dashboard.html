@@ -1,0 +1,555 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="welcome">
+
+    <h2>
+        <i class="fa-solid fa-user"></i>
+        Welcome, {{ current_user.full_name }}
+    </h2>
+
+    <p>
+        Welcome back to SmartBank Pro. Here's your banking overview.
+    </p>
+
+</div>
+
+<div class="row g-4">
+
+    <!-- Balance Card -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card balance-card">
+
+            <div class="card-body text-center">
+
+                <i class="fa-solid fa-wallet fa-3x mb-3"></i>
+
+                <h5>Available Balance</h5>
+
+                <h3>
+                    ₹{{ "%.2f"|format(current_user.account.balance) }}
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Deposit Card -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card deposit-card">
+
+            <div class="card-body text-center">
+
+                <i class="fa-solid fa-arrow-down fa-3x mb-3"></i>
+
+                <h5>Total Deposits</h5>
+
+                <h3>
+
+                    ₹
+                    {% set total = namespace(value=0) %}
+                    {% for t in current_user.account.transactions %}
+                        {% if t.transaction_type == "Deposit" %}
+                            {% set total.value = total.value + t.amount %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ "%.2f"|format(total.value) }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Withdraw Card -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card withdraw-card">
+
+            <div class="card-body text-center">
+
+                <i class="fa-solid fa-money-bill-wave fa-3x mb-3"></i>
+
+                <h5>Total Withdrawals</h5>
+
+                <h3>
+
+                    ₹
+                    {% set total = namespace(value=0) %}
+                    {% for t in current_user.account.transactions %}
+                        {% if t.transaction_type == "Withdraw" %}
+                            {% set total.value = total.value + t.amount %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ "%.2f"|format(total.value) }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Transfer Card -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card transfer-card">
+
+            <div class="card-body text-center">
+
+                <i class="fa-solid fa-right-left fa-3x mb-3"></i>
+
+                <h5>Total Transfers</h5>
+
+                <h3>
+
+                    ₹
+                    {% set total = namespace(value=0) %}
+                    {% for t in current_user.account.transactions %}
+                        {% if t.transaction_type == "Transfer" %}
+                            {% set total.value = total.value + t.amount %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ "%.2f"|format(total.value) }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<!-- Quick Actions -->
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <h4>
+
+            <i class="fa-solid fa-bolt"></i>
+
+            Quick Actions
+
+        </h4>
+
+        <br>
+
+        <div class="quick-actions">
+
+            <a href="{{ url_for('deposit') }}" class="btn btn-success">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Deposit
+
+            </a>
+
+            <a href="{{ url_for('withdraw') }}" class="btn btn-danger">
+
+                <i class="fa-solid fa-minus"></i>
+
+                Withdraw
+
+            </a>
+
+            <a href="{{ url_for('transfer') }}" class="btn btn-primary">
+
+                <i class="fa-solid fa-right-left"></i>
+
+                Transfer
+
+            </a>
+
+            
+            <a href="{{ url_for('download_statement') }}" class="btn btn-primary">
+                📄 Download PDF Statement
+            </a>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body text-center">
+
+        <h5>Current Date & Time</h5>
+
+        <h4 id="datetime"></h4>
+
+    </div>
+</div>
+
+<script>
+
+function updateTime(){
+
+    const now = new Date();
+
+    document.getElementById("datetime").innerHTML =
+        now.toLocaleString();
+
+}
+
+updateTime();
+
+setInterval(updateTime,1000);
+
+</script>
+
+<!-- Account Details -->
+
+<div class="row">
+
+    <div class="col-lg-4">
+
+        <div class="account-box">
+
+            <h4>
+
+                <i class="fa-solid fa-id-card"></i>
+
+                Account Details
+
+            </h4>
+
+            <hr>
+
+            <p>
+
+                <strong>Name:</strong>
+
+                {{ current_user.full_name }}
+
+            </p>
+
+            <p>
+
+                <strong>Email:</strong>
+
+                {{ current_user.email }}
+
+            </p>
+
+            <p>
+
+                <strong>Phone:</strong>
+
+                {{ current_user.phone }}
+
+            </p>
+
+            <p>
+
+                <strong>Account Number:</strong>
+
+                {{ current_user.account.account_number }}
+
+            </p>
+
+            <p>
+
+                <strong>Account Type:</strong>
+
+                {{ current_user.account.account_type }}
+
+            </p>
+
+            <p>
+
+                <strong>Branch:</strong>
+
+                {{ current_user.account.branch }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Transaction Table Starts -->
+
+    <div class="col-lg-8">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <h4>
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Recent Transactions
+
+                </h4>
+
+                <hr>
+
+                <table class="table table-hover table-bordered">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <th>Type</th>
+
+                            <th>Description</th>
+
+                            <th>Amount</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for transaction in current_user.account.transactions|reverse %}
+
+                        <tr>
+
+                            <td>
+                                {{ transaction.timestamp.strftime("%d-%m-%Y %H:%M") }}
+                            </td>
+
+                            <td>
+
+                                {% if transaction.transaction_type == "Deposit" %}
+
+                                    <span class="badge bg-success">
+                                        Deposit
+                                    </span>
+
+                                {% elif transaction.transaction_type == "Withdraw" %}
+
+                                    <span class="badge bg-danger">
+                                        Withdraw
+                                    </span>
+
+                                {% elif transaction.transaction_type == "Transfer" %}
+
+                                    <span class="badge bg-primary">
+                                        Transfer
+                                    </span>
+
+                                {% elif transaction.transaction_type == "Received" %}
+
+                                    <span class="badge bg-info">
+                                        Received
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        {{ transaction.transaction_type }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {% if transaction.description %}
+
+                                    {{ transaction.description }}
+
+                                {% else %}
+
+                                    -
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {% if transaction.transaction_type == "Deposit" or transaction.transaction_type == "Received" %}
+
+                                    <span class="text-success fw-bold">
+
+                                        +₹{{ "%.2f"|format(transaction.amount) }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="text-danger fw-bold">
+
+                                        -₹{{ "%.2f"|format(transaction.amount) }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="4" class="text-center text-muted">
+
+                                No transactions found.
+
+                            </td>
+
+                        </tr>
+
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <div class="card shadow mt-4">
+                            <div class="card-body">
+                                <h4>Monthly Banking Analytics</h4>
+
+                                <canvas id="bankChart"></canvas>
+
+                            </div>
+
+                        </div>
+                        
+                        
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="text-center">
+
+    <a href="{{ url_for('logout') }}" class="btn btn-dark btn-lg">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Logout
+
+    </a>
+
+</div>
+
+<div class="row mt-4">
+
+<div class="col-md-3">
+<div class="card text-center shadow">
+
+<div class="card-body">
+
+<h5>💰 Balance</h5>
+
+<h3>₹{{ account.balance }}</h3>
+
+</div>
+
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card text-center shadow">
+
+<div class="card-body">
+
+<h5>📈 Deposits</h5>
+
+<h3>₹{{ total_deposit }}</h3>
+
+</div>
+
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card text-center shadow">
+
+<div class="card-body">
+
+<h5>📉 Withdrawals</h5>
+
+<h3>₹{{ total_withdraw }}</h3>
+
+</div>
+
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card text-center shadow">
+
+<div class="card-body">
+
+<h5>🔄 Transfers</h5>
+
+<h3>₹{{ total_transfer }}</h3>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<h3 class="mt-5">Recent Transactions</h3>
+
+<table class="table table-striped">
+
+<tr>
+
+<th>Type</th>
+
+<th>Amount</th>
+
+<th>Description</th>
+
+</tr>
+
+{% for t in recent_transactions %}
+
+<tr>
+
+<td>{{ t.transaction_type }}</td>
+
+<td>₹{{ t.amount }}</td>
+
+<td>{{ t.description }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

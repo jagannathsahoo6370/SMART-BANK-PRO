@@ -1,0 +1,24 @@
+mail - abc@gmail.com
+password - zxc@6370
+
+Account Details:-
+Name: Jagannath Sahoo
+Email: abc@gmail.com
+Phone: 6370866414
+Account Number: 9596733499
+Account Type: Savings
+Branch: Main Branch
+
+
+
+
+mail - rahul@gmail.com
+password - rahul@123
+
+Account Details:-
+Name: Rahul Das
+Email: rahul@gmail.com
+Phone: 1234567899
+Account Number: 4190182521
+Account Type: Savings
+Branch: Main Branch
